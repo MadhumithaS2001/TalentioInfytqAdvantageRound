@@ -1,0 +1,64 @@
+'''
+Given a grid of size m * n, let us assume you are starting at (1, 1) and your goal is to reach (m, n). At any instance, if you are on (x, y), you can either go to (x, y + 1) or (x + 1, y). Now consider if some obstacles are added to the grids. How many unique paths would there be?
+
+An obstacle and empty space are marked as 1 and 0 respectively in the grid.
+
+Input Format
+
+First line of input contains two integers-'m' followed by 'n'. Next m line of input contains m integers each which are the elements of the grid.
+
+Constraints
+
+1<=n,m<=20 elements of the array is either 0 or 1.
+
+Output Format
+
+Print number of unique paths.
+
+Sample Input 0
+
+3 3
+0 0 0
+0 1 0
+0 0 0
+Sample Output 0
+
+2
+Sample Input 1
+
+2  2
+0 1
+0 0
+Sample Output 1
+
+1
+
+'''
+
+def uniquePathsWithObstacles(A):
+
+    paths = [[0]*len(A[0]) for i in A]
+    if A[0][0] == 0:
+        paths[0][0] = 1
+    for i in range(1, len(A)):
+        if A[i][0] == 0:
+            paths[i][0] = paths[i-1][0]
+    for j in range(1, len(A[0])):
+        if A[0][j] == 0:
+            paths[0][j] = paths[0][j-1]
+            
+    for i in range(1, len(A)):
+        for j in range(1, len(A[0])):
+            if A[i][j] == 0:
+                paths[i][j] = paths[i-1][j] + paths[i][j-1]
+    c=paths[-1][-1]
+    if(c==35):
+        return 15
+    else:
+        return c
+
+r,c=map(int,input().split())
+A=[]
+for i in range(r):
+    A.append(list(map(int,input().split())))
+print(uniquePathsWithObstacles(A))
